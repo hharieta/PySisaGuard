@@ -1,0 +1,12 @@
+import datetime
+from pywhatkit import sendwhatmsg
+
+
+def send_whatsapp(phone_number: str, message: str,):
+
+    now_time = datetime.datetime.now()
+    hour = now_time.hour
+    minute = (now_time.minute + 2) % 60
+    if minute < now_time.minute:
+        hour = (hour + 1) % 24
+    sendwhatmsg(phone_number, message, hour, minute, wait_time=10, tab_close=True)

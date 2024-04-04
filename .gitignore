@@ -1,6 +1,8 @@
 venv
 .nvimlog
 .DS_Store
+.env
 tensor.code-workspace
 captures
 data_sets/Dataset-Unicauca-Version2-87Atts.csv
+__pycache__

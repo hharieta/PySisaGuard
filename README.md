@@ -2,48 +2,41 @@
 
 Model and predict network security threats from SisaGuard, a network security Project.
 
-## Diagram of the Project
+## Flowchart SiSaGuard Network Security
 
 ```mermaid
 graph TD;
     A[Tshark/PyShark Capture] --> B{Traffic Data}
     B --> C[Process for Model]
-    B --> D[Process for CSV]
+    B --> D[Process for JSON/CSV]
     C --> E[Model Prediction]
-    E --> F[Add Prediction to CSV]
+    E --> F[Data Prediction to JSON/CSV]
     D --> F
-    F --> G[WebSocket]
+    F --> G[Rest API]
+    E --> H[Analysis]
+    H --> I[Email Report]
+    G --> J[Dashboard]
 ```
 
 
 
-### Observaciones Clave
+### Key Observations
 
-1. **Información Temporal y de Red**:
-   - `Timestamp`, `Source IP Address`, `Destination IP Address`, `Source Port`, y `Destination Port` ofrecen un contexto detallado sobre cada evento de red, permitiendo análisis temporales y basados en la red.
+1. **Temporal and Network Information**:
+   - `Timestamp`, `Source IP Address`, `Destination IP Address`, `Source Port`, and `Destination Port` provide detailed context about each network event, enabling temporal and network-based analysis.
 
-2. **Protocolo y Tipo de Tráfico**:
-   - `Protocol`, `Packet Length`, `Packet Type`, y `Traffic Type` (ICMP, UDP, TCP, HTTP, DNS) son críticos para entender la naturaleza del tráfico y podrían ser indicativos de comportamientos normales o maliciosos.
+2. **Protocol and Type of Traffic**:
+   - `Protocol`, `Packet Length`, `Packet Type`, and `Traffic Type` (ICMP, UDP, TCP, HTTP, DNS) are critical to understanding the nature of traffic and could be indicative of normal or malicious behavior.
 
-3. **Datos de Carga Útil**:
-   - `Payload Data` contiene datos codificados de los paquetes, lo que podría ser analizado para detectar patrones específicos asociados con malware o ataques.
 
-4. **Indicadores de Seguridad**:
-   - `Action Taken`, `Severity Level`, `Firewall Logs`, `IDS/IPS Alerts`, y `Proxy Information` ofrecen insights sobre cómo los sistemas de seguridad han respondido a cada evento.
+### Suggestions for Using the Data Set
 
-### Sugerencias para la Utilización del Conjunto de Datos
+- **Payload Analysis**:
+  - Natural language processing (NLP) techniques are considered to analyze the content of `Payload Data`, looking for known malware signatures or anomalous patterns.
 
-- **Análisis de Carga Útil**:
-  - Se considera técnicas de procesamiento de lenguaje natural (NLP) para analizar el contenido de `Payload Data`, buscando firmas de malware conocidas o patrones anómalos.
+- **Features Based on the Protocol**:
+  - `Protocol`, `IP Address`, and `Ports` are used as features in the model.
 
-- **Características Basadas en el Protocolo**:
-  - `Protocol`, `Packet Type`, y `Traffic Type` pueden ser codificados (por ejemplo, usando one-hot encoding) para usarlos como características en tu modelo.
-
-- **Análisis Temporal**:
-  - Convierte `Timestamp` a un formato de fecha y hora en Python para realizar análisis que consideren la temporalidad de los ataques.
-
-- **Modelo de Detección de Anomalías**:
-  - Podrías emplear un enfoque de detección de anomalías para identificar tráfico de red que se desvía significativamente de los patrones normales, utilizando `Anomaly Scores` como una referencia.
-
-- **Modelo de Clasificación Supervisada**:
-  - Usa `Attack Type` o `Severity Level` como etiquetas para entrenar un modelo de clasificación que pueda predecir el tipo o la gravedad de los ataques basándose en las características disponibles.
+- **Supervised Classification Model**:
+  - Use `Attack Type` or `Severity Level` as labels to train a classification model that can predict the type or severity of attacks based on available features.
+  
